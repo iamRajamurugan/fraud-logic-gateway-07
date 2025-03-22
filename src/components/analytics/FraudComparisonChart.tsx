@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import {
   BarChart,
   Bar,
@@ -9,8 +9,24 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  Label,
 } from "recharts";
 import { cn } from "@/lib/utils";
+import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 // Mock data
 const channelData = [
@@ -51,49 +67,175 @@ interface FraudComparisonChartProps {
 }
 
 export function FraudComparisonChart({ type, className, icon }: FraudComparisonChartProps) {
+  const [sortBy, setSortBy] = useState<"predicted" | "reported" | "name">("predicted");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+
   const getData = () => {
+    let data;
     switch (type) {
       case "channel":
-        return channelData;
+        data = channelData;
+        break;
       case "payment-mode":
-        return paymentModeData;
+        data = paymentModeData;
+        break;
       case "gateway":
-        return gatewayData;
+        data = gatewayData;
+        break;
       case "user":
-        return userData;
+        data = userData;
+        break;
       default:
-        return channelData;
+        data = channelData;
+    }
+
+    // Sort data based on current sortBy and sortOrder
+    return [...data].sort((a, b) => {
+      if (sortBy === "name") {
+        return sortOrder === "asc" 
+          ? a.name.localeCompare(b.name) 
+          : b.name.localeCompare(a.name);
+      } else {
+        return sortOrder === "asc" 
+          ? a[sortBy] - b[sortBy] 
+          : b[sortBy] - a[sortBy];
+      }
+    });
+  };
+
+  const getTitle = () => {
+    switch (type) {
+      case "channel":
+        return "Fraud by Transaction Channel";
+      case "payment-mode":
+        return "Fraud by Payment Mode";
+      case "gateway":
+        return "Fraud by Gateway Bank";
+      case "user":
+        return "Fraud by User";
+      default:
+        return "Fraud Comparison";
     }
   };
 
+  const getDescription = () => {
+    switch (type) {
+      case "channel":
+        return "Comparing fraud metrics across different transaction channels";
+      case "payment-mode":
+        return "Comparing fraud metrics across different payment modes";
+      case "gateway":
+        return "Comparing fraud metrics across different gateway banks";
+      case "user":
+        return "Top users with highest fraud incidents";
+      default:
+        return "Comparison of predicted vs reported frauds";
+    }
+  };
+
+  const handleSortChange = (value: string) => {
+    const [newSortBy, newSortOrder] = value.split("-") as [
+      "predicted" | "reported" | "name", 
+      "asc" | "desc"
+    ];
+    
+    setSortBy(newSortBy);
+    setSortOrder(newSortOrder);
+  };
+
+  const chartConfig = {
+    predicted: {
+      label: "Predicted Frauds",
+      theme: {
+        light: "#1A49A5",
+        dark: "#3A69C5",
+      },
+    },
+    reported: {
+      label: "Reported Frauds",
+      theme: {
+        light: "#F38C26",
+        dark: "#F5A54F",
+      },
+    },
+  };
+
   return (
-    <div className={cn("w-full h-80", className)}>
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart
-          data={getData()}
-          margin={{
-            top: 20,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
+    <div className={cn("w-full", className)}>
+      <div className="flex justify-between items-center mb-4">
+        <div>
+          <h3 className="text-base font-medium">{getTitle()}</h3>
+          <p className="text-sm text-muted-foreground">{getDescription()}</p>
+        </div>
+        <Select 
+          value={`${sortBy}-${sortOrder}`}
+          onValueChange={handleSortChange}
         >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip 
-            contentStyle={{ 
-              backgroundColor: 'white', 
-              borderRadius: '6px',
-              border: '1px solid #e2e8f0',
-              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' 
-            }}
-          />
-          <Legend />
-          <Bar dataKey="predicted" name="Predicted Frauds" fill="#1A49A5" radius={[4, 4, 0, 0]} />
-          <Bar dataKey="reported" name="Reported Frauds" fill="#F38C26" radius={[4, 4, 0, 0]} />
-        </BarChart>
-      </ResponsiveContainer>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Sort by" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="predicted-desc">Highest Predicted</SelectItem>
+            <SelectItem value="reported-desc">Highest Reported</SelectItem>
+            <SelectItem value="predicted-asc">Lowest Predicted</SelectItem>
+            <SelectItem value="reported-asc">Lowest Reported</SelectItem>
+            <SelectItem value="name-asc">Name (A-Z)</SelectItem>
+            <SelectItem value="name-desc">Name (Z-A)</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="h-80 w-full">
+        <ChartContainer config={chartConfig}>
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={getData()}
+              margin={{
+                top: 20,
+                right: 30,
+                left: 20,
+                bottom: 20,
+              }}
+              barGap={8}
+              barCategoryGap={16}
+            >
+              <CartesianGrid strokeDasharray="3 3" vertical={false} opacity={0.3} />
+              <XAxis 
+                dataKey="name" 
+                tick={{ fontSize: 12 }}
+                tickMargin={10}
+                axisLine={{ stroke: '#E2E8F0' }}
+              />
+              <YAxis 
+                tick={{ fontSize: 12 }}
+                tickMargin={10}
+                axisLine={{ stroke: '#E2E8F0' }}
+              >
+                <Label
+                  value="Number of Transactions"
+                  angle={-90}
+                  position="insideLeft"
+                  style={{ textAnchor: 'middle', fontSize: '12px', fill: 'var(--muted-foreground)' }}
+                />
+              </YAxis>
+              <Tooltip content={<ChartTooltipContent />} />
+              <Legend wrapperStyle={{ paddingTop: 15 }} />
+              <Bar 
+                dataKey="predicted" 
+                name="predicted" 
+                fill="var(--color-predicted)" 
+                radius={[4, 4, 0, 0]} 
+              />
+              <Bar 
+                dataKey="reported" 
+                name="reported" 
+                fill="var(--color-reported)" 
+                radius={[4, 4, 0, 0]} 
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartContainer>
+      </div>
     </div>
   );
 }
