@@ -60,7 +60,7 @@ export function RuleForm({ onClose, initialRule }: RuleFormProps) {
   const handleParameterChange = (
     index: number,
     field: keyof Omit<RuleParameter, "id">,
-    value: string | number | boolean
+    value: string | number
   ) => {
     const newParameters = [...parameters];
     newParameters[index] = {

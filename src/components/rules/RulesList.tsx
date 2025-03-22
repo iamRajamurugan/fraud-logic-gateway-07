@@ -24,7 +24,7 @@ import {
 export function RulesList() {
   const { filteredRules, filterRules } = useRules();
   const [searchTerm, setSearchTerm] = useState("");
-  const [severityFilter, setSeverityFilter] = useState<Rule["severity"] | "">("");
+  const [severityFilter, setSeverityFilter] = useState<Rule["severity"] | "all">("all");
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [currentRule, setCurrentRule] = useState<Rule | null>(null);
@@ -32,12 +32,12 @@ export function RulesList() {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value;
     setSearchTerm(term);
-    filterRules(term, severityFilter || undefined);
+    filterRules(term, severityFilter === "all" ? undefined : severityFilter);
   };
 
   const handleSeverityFilter = (value: string) => {
-    setSeverityFilter(value as Rule["severity"] | "");
-    filterRules(searchTerm, value ? (value as Rule["severity"]) : undefined);
+    setSeverityFilter(value as Rule["severity"] | "all");
+    filterRules(searchTerm, value === "all" ? undefined : (value as Rule["severity"]));
   };
 
   const handleEditRule = (rule: Rule) => {
@@ -69,7 +69,7 @@ export function RulesList() {
                 </div>
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Severities</SelectItem>
+                <SelectItem value="all">All Severities</SelectItem>
                 <SelectItem value="low">Low</SelectItem>
                 <SelectItem value="medium">Medium</SelectItem>
                 <SelectItem value="high">High</SelectItem>
@@ -91,17 +91,17 @@ export function RulesList() {
           </div>
           <h3 className="text-lg font-medium">No rules found</h3>
           <p className="max-w-md mt-2 text-sm text-muted-foreground">
-            {searchTerm || severityFilter
+            {searchTerm || severityFilter !== "all"
               ? "No rules match your current filters. Try adjusting your search criteria."
               : "You haven't created any rules yet. Click the 'Create New Rule' button to get started."}
           </p>
-          {(searchTerm || severityFilter) && (
+          {(searchTerm || severityFilter !== "all") && (
             <Button
               variant="outline"
               className="mt-4"
               onClick={() => {
                 setSearchTerm("");
-                setSeverityFilter("");
+                setSeverityFilter("all");
                 filterRules("", undefined);
               }}
             >
