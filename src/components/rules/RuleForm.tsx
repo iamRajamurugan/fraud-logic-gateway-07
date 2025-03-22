@@ -20,11 +20,13 @@ interface RuleFormProps {
   initialRule: Rule | null;
 }
 
+type ParameterWithoutId = Omit<RuleParameter, "id">;
+
 export function RuleForm({ onClose, initialRule }: RuleFormProps) {
   const { addRule, updateRule } = useRules();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [parameters, setParameters] = useState<Omit<RuleParameter, "id">[]>([]);
+  const [parameters, setParameters] = useState<ParameterWithoutId[]>([]);
   const [severity, setSeverity] = useState<Rule["severity"]>("medium");
   const [isEditing, setIsEditing] = useState(false);
 
@@ -50,7 +52,7 @@ export function RuleForm({ onClose, initialRule }: RuleFormProps) {
 
   const handleParameterChange = (
     index: number,
-    field: keyof Omit<RuleParameter, "id">,
+    field: keyof ParameterWithoutId,
     value: string | number
   ) => {
     const newParameters = [...parameters];
@@ -95,8 +97,6 @@ export function RuleForm({ onClose, initialRule }: RuleFormProps) {
         parameters: parametersWithIds,
         severity,
         enabled: true,
-        createdAt: new Date(),
-        modifiedAt: new Date(),
       });
     }
 
@@ -269,7 +269,7 @@ export function RuleForm({ onClose, initialRule }: RuleFormProps) {
   );
 }
 
-const defaultParameter: Omit<RuleParameter, "id"> = {
+const defaultParameter: ParameterWithoutId = {
   name: "",
   type: "amount",
   value: "",

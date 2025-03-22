@@ -1,198 +1,148 @@
 
-import { useState } from "react";
-import { 
-  Calendar, 
-  BarChart3, 
-  PieChart, 
-  Clock, 
-  Search, 
-  Filter, 
-  RefreshCw,
-  UserRound,
-  Wallet,
-  Building,
-  AlertTriangle,
-  Download
-} from "lucide-react";
-import { TransactionTable } from "@/components/analytics/TransactionTable";
-import { FraudComparisonChart } from "@/components/analytics/FraudComparisonChart";
-import { FraudTrendsChart } from "@/components/analytics/FraudTrendsChart";
-import { ModelEvaluation } from "@/components/analytics/ModelEvaluation";
-import { Button } from "@/components/ui/button";
+import React, { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { FraudTrendsChart } from "@/components/analytics/FraudTrendsChart";
+import { FraudComparisonChart } from "@/components/analytics/FraudComparisonChart";
+import { ModelEvaluation } from "@/components/analytics/ModelEvaluation";
+import { TransactionTable } from "@/components/analytics/TransactionTable";
 
-const Analytics = () => {
-  const [activeTab, setActiveTab] = useState("transactions");
+// Sample data for the fraud trends chart
+const trendData = [
+  { name: "Jan", flagged: 65, legitimate: 240 },
+  { name: "Feb", flagged: 59, legitimate: 260 },
+  { name: "Mar", flagged: 80, legitimate: 290 },
+  { name: "Apr", flagged: 81, legitimate: 310 },
+  { name: "May", flagged: 56, legitimate: 340 },
+  { name: "Jun", flagged: 55, legitimate: 380 },
+  { name: "Jul", flagged: 40, legitimate: 430 }
+];
+
+// Sample data for the comparison chart
+const comparisonData = [
+  { name: "Credit Card", fraudulent: 400, legitimate: 2400 },
+  { name: "Debit Card", fraudulent: 300, legitimate: 1398 },
+  { name: "ACH", fraudulent: 200, legitimate: 9800 },
+  { name: "Wire", fraudulent: 278, legitimate: 3908 },
+  { name: "Crypto", fraudulent: 189, legitimate: 4800 }
+];
+
+// Sample data for transactions
+const transactions = [
+  {
+    id: "TX123456",
+    amount: 1250,
+    status: "flagged",
+    risk: 85,
+    timestamp: "2023-05-15T09:24:00",
+    source: "web",
+    userId: "user-789"
+  },
+  {
+    id: "TX123457",
+    amount: 50,
+    status: "cleared",
+    risk: 15,
+    timestamp: "2023-05-15T10:12:00",
+    source: "mobile",
+    userId: "user-456"
+  },
+  {
+    id: "TX123458",
+    amount: 2430,
+    status: "flagged",
+    risk: 72,
+    timestamp: "2023-05-15T11:05:00",
+    source: "web",
+    userId: "user-123"
+  },
+  {
+    id: "TX123459",
+    amount: 199,
+    status: "cleared",
+    risk: 28,
+    timestamp: "2023-05-15T12:34:00",
+    source: "mobile",
+    userId: "user-789"
+  },
+  {
+    id: "TX123460",
+    amount: 4999,
+    status: "flagged",
+    risk: 92,
+    timestamp: "2023-05-15T13:17:00",
+    source: "web",
+    userId: "user-456"
+  }
+];
+
+// Sample model performance metrics
+const modelPerformance = {
+  accuracy: 0.92,
+  precision: 0.89,
+  recall: 0.86,
+  f1Score: 0.87,
+  auc: 0.94
+};
+
+export default function Analytics() {
+  const [activeTab, setActiveTab] = useState("overview");
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Fraud Analytics Dashboard</h1>
-          <p className="text-muted-foreground mt-1">
-            Monitor, analyze and visualize transaction fraud data across all payment channels
-          </p>
-        </div>
-        <div className="flex items-center space-x-2">
-          <Button 
-            variant="outline" 
-            size="sm"
-            className="whitespace-nowrap"
-          >
-            <Calendar className="h-4 w-4 mr-2" />
-            Last 30 Days
-          </Button>
-          <Button 
-            size="sm" 
-            className="bg-brand-blue hover:bg-brand-blue-light whitespace-nowrap"
-          >
-            <RefreshCw className="h-4 w-4 mr-2" />
-            Refresh Data
-          </Button>
-        </div>
+    <div className="container mx-auto py-6 space-y-8">
+      <div className="flex flex-col space-y-4">
+        <h1 className="text-3xl font-bold tracking-tight">Risk Analytics</h1>
+        <p className="text-muted-foreground">
+          Monitor fraud detection performance and analyze transaction patterns.
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="shadow-sm">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Total Transactions</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">3,287</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              +5.2% from previous period
-            </p>
-          </CardContent>
-        </Card>
-        <Card className="shadow-sm">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Predicted Frauds</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">124</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              3.8% of total transactions
-            </p>
-          </CardContent>
-        </Card>
-        <Card className="shadow-sm">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Reported Frauds</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">87</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              2.6% of total transactions
-            </p>
-          </CardContent>
-        </Card>
-        <Card className="shadow-sm">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Avg Transaction Value</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">₹4,892</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              -2.1% from previous period
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
-      <Tabs defaultValue="transactions" onValueChange={setActiveTab} className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="transactions" className="text-sm">Transactions</TabsTrigger>
-          <TabsTrigger value="fraud-analysis" className="text-sm">Fraud Analysis</TabsTrigger>
-          <TabsTrigger value="model-evaluation" className="text-sm">Model Evaluation</TabsTrigger>
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <TabsList className="grid grid-cols-4 w-full max-w-md">
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="trends">Trends</TabsTrigger>
+          <TabsTrigger value="transactions">Transactions</TabsTrigger>
+          <TabsTrigger value="models">Models</TabsTrigger>
         </TabsList>
-        
-        <TabsContent value="transactions" className="space-y-6">
-          <TransactionTable />
+
+        <TabsContent value="overview" className="space-y-6 pt-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <FraudTrendsChart data={trendData} />
+            <FraudComparisonChart data={comparisonData} />
+          </div>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Recent Flagged Transactions</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <TransactionTable transactions={transactions.filter(t => t.status === "flagged")} />
+            </CardContent>
+          </Card>
         </TabsContent>
-        
-        <TabsContent value="fraud-analysis" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="lg:col-span-2 shadow-md">
-              <CardHeader>
-                <CardTitle>Fraud Trends Over Time</CardTitle>
-                <CardDescription>
-                  Visualizing predicted vs reported frauds over time
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-2">
-                <FraudTrendsChart />
-              </CardContent>
-            </Card>
-            
-            <Card className="shadow-md">
-              <CardHeader>
-                <CardTitle>Fraud by Transaction Channel</CardTitle>
-                <CardDescription>
-                  Comparing fraud metrics across different transaction channels
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-2">
-                <FraudComparisonChart 
-                  type="channel" 
-                  icon={<Wallet className="h-4 w-4" />}
-                />
-              </CardContent>
-            </Card>
-            
-            <Card className="shadow-md">
-              <CardHeader>
-                <CardTitle>Fraud by Payment Mode</CardTitle>
-                <CardDescription>
-                  Comparing fraud metrics across different payment modes
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-2">
-                <FraudComparisonChart 
-                  type="payment-mode" 
-                  icon={<Wallet className="h-4 w-4" />}
-                />
-              </CardContent>
-            </Card>
-            
-            <Card className="shadow-md">
-              <CardHeader>
-                <CardTitle>Fraud by Gateway Bank</CardTitle>
-                <CardDescription>
-                  Comparing fraud metrics across different gateway banks
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-2">
-                <FraudComparisonChart 
-                  type="gateway" 
-                  icon={<Building className="h-4 w-4" />}
-                />
-              </CardContent>
-            </Card>
-            
-            <Card className="shadow-md">
-              <CardHeader>
-                <CardTitle>Fraud by User</CardTitle>
-                <CardDescription>
-                  Top users with highest fraud incidents
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-2">
-                <FraudComparisonChart 
-                  type="user" 
-                  icon={<UserRound className="h-4 w-4" />}
-                />
-              </CardContent>
-            </Card>
+
+        <TabsContent value="trends" className="space-y-6 pt-4">
+          <div className="grid gap-6">
+            <FraudTrendsChart data={trendData} />
+            <FraudComparisonChart data={comparisonData} />
           </div>
         </TabsContent>
-        
-        <TabsContent value="model-evaluation" className="space-y-6">
-          <ModelEvaluation />
+
+        <TabsContent value="transactions" className="pt-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>All Transactions</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <TransactionTable transactions={transactions} />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="models" className="pt-4">
+          <ModelEvaluation data={modelPerformance} />
         </TabsContent>
       </Tabs>
     </div>
   );
-};
-
-export default Analytics;
+}

@@ -23,8 +23,8 @@ const queryClient = new QueryClient({
   },
 });
 
-const App = () => (
-  <React.StrictMode>
+function App() {
+  return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <RulesProvider>
@@ -44,7 +44,7 @@ const App = () => (
         </RulesProvider>
       </TooltipProvider>
     </QueryClientProvider>
-  </React.StrictMode>
-);
+  );
+}
 
 export default App;
