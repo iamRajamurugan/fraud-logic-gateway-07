@@ -2,15 +2,12 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { 
-  ActivitySquare, 
-  AlertTriangle, 
   BarChart3, 
   ChevronLeft, 
   ChevronRight,
   Home, 
   LucideIcon, 
   ScrollText, 
-  Settings, 
   Shield, 
   TestTube2
 } from "lucide-react";
@@ -43,26 +40,6 @@ const navItems: NavItem[] = [
     title: "Risk Analytics",
     href: "/analytics",
     icon: BarChart3,
-  },
-  {
-    title: "GNN Insights",
-    href: "/insights",
-    icon: ActivitySquare,
-  },
-  {
-    title: "Alerts",
-    href: "/alerts",
-    icon: AlertTriangle,
-  },
-  {
-    title: "Security",
-    href: "/security",
-    icon: Shield,
-  },
-  {
-    title: "Settings",
-    href: "/settings",
-    icon: Settings,
   },
 ];
 
