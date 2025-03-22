@@ -8,8 +8,7 @@ import {
   Home, 
   LucideIcon, 
   ScrollText, 
-  TestTube2,
-  Zap
+  TestTube2
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -53,18 +52,26 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "h-screen sticky top-0 transition-all duration-300 ease-in-out z-30 flex flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border",
+        "h-screen sticky top-0 transition-all duration-300 ease-in-out z-30 flex flex-col bg-white text-sidebar-foreground border-r border-sidebar-border",
         collapsed ? "w-16" : "w-64"
       )}
     >
       <div className="flex items-center justify-between h-16 px-4 border-b border-sidebar-border">
         {!collapsed && (
           <div className="flex items-center">
-            <span className="text-xl font-semibold tracking-tight">SabPaisa</span>
+            <img 
+              src="/lovable-uploads/58817b3e-3865-4da7-bfd5-151640f058bd.png" 
+              alt="SabPaisa" 
+              className="h-8" 
+            />
           </div>
         )}
         {collapsed && (
-          <span className="text-lg font-bold mx-auto">SP</span>
+          <img 
+            src="/lovable-uploads/58817b3e-3865-4da7-bfd5-151640f058bd.png" 
+            alt="SabPaisa" 
+            className="h-6 mx-auto" 
+          />
         )}
         <Button
           variant="ghost"

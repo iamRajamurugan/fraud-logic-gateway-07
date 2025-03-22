@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -37,13 +36,13 @@
 
     --radius: 0.5rem;
 
-    /* SabPaisa Colors */
-    --sidebar-background: 217 100% 50%; /* SabPaisa blue for sidebar */
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 100% / 0.1;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 100% / 0.2;
-    --sidebar-ring: 0 0% 100% / 0.1;
+    /* SabPaisa Colors - Updated sidebar to white */
+    --sidebar-background: 0 0% 100%; /* Changed to white */
+    --sidebar-foreground: 222.2 84% 4.9%; /* Dark text for contrast on white */
+    --sidebar-accent: 210 40% 96.1%;
+    --sidebar-accent-foreground: 222.2 47.4% 11.2%;
+    --sidebar-border: 220 13% 90%;
+    --sidebar-ring: 222.2 84% 4.9% / 0.1;
     --sidebar-primary: 36 100% 50%; /* SabPaisa orange */
     --sidebar-primary-foreground: 0 0% 0%;
   }
