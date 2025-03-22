@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { PlusCircle, Trash2 } from "lucide-react";
 import { Rule, RuleParameter, useRules } from "@/context/RulesContext";
@@ -27,7 +26,7 @@ const defaultParameter: Omit<RuleParameter, "id"> = {
   condition: "greater_than",
 };
 
-export function RuleForm({ onClose, initialRule }: RuleFormProps) {
+export default function RuleForm({ onClose, initialRule }: RuleFormProps) {
   const { addRule, updateRule } = useRules();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -60,7 +59,7 @@ export function RuleForm({ onClose, initialRule }: RuleFormProps) {
   const handleParameterChange = (
     index: number,
     field: keyof Omit<RuleParameter, "id">,
-    value: string | number
+    value: string | number | readonly string[]
   ) => {
     const newParameters = [...parameters];
     newParameters[index] = {
