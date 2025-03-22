@@ -81,24 +81,22 @@ export function RuleForm({ onClose, initialRule }: RuleFormProps) {
     }));
 
     if (isEditing && initialRule) {
-      updateRule({
-        id: initialRule.id,
+      updateRule(initialRule.id, {
         name,
         description,
         parameters: parametersWithIds,
         severity,
-        dateCreated: initialRule.dateCreated,
-        dateUpdated: new Date().toISOString(),
+        modifiedAt: new Date(),
       });
     } else {
       addRule({
-        id: uuidv4(),
         name,
         description,
         parameters: parametersWithIds,
         severity,
-        dateCreated: new Date().toISOString(),
-        dateUpdated: new Date().toISOString(),
+        enabled: true,
+        createdAt: new Date(),
+        modifiedAt: new Date(),
       });
     }
 
