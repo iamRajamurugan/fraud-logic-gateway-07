@@ -107,7 +107,7 @@ export default function Analytics() {
               <CardTitle className="text-lg font-medium text-brand-text">Recent Flagged Transactions</CardTitle>
             </CardHeader>
             <CardContent>
-              <TransactionTable transactions={transactions.filter(t => t.status === "flagged")} />
+              <TransactionTable data={transactions.filter(t => t.status === "flagged")} />
             </CardContent>
           </Card>
         </TabsContent>
@@ -125,7 +125,7 @@ export default function Analytics() {
               <CardTitle className="text-lg font-medium text-brand-text">All Transactions</CardTitle>
             </CardHeader>
             <CardContent>
-              <TransactionTable transactions={transactions} />
+              <TransactionTable data={transactions} />
             </CardContent>
           </Card>
         </TabsContent>

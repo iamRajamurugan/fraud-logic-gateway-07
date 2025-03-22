@@ -67,13 +67,15 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				brand: {
-					blue: '#2B4FC2',
-					orange: '#F7941D',
+					blue: '#2B4FC2',      // SabPaisa primary blue
+					orange: '#F7941D',    // SabPaisa accent orange
 					'blue-light': '#4E6ED7',
 					'orange-light': '#F9AB52',
 					'background': '#F5F7FA',
 					'text': '#333333',
-					'border': '#D1D5DB'
+					'border': '#D1D5DB',
+					'sabpaisa-blue': '#0075FF', // SabPaisa logo blue
+					'sabpaisa-orange': '#FF9900' // SabPaisa logo orange
 				}
 			},
 			borderRadius: {

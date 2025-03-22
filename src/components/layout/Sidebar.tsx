@@ -8,8 +8,8 @@ import {
   Home, 
   LucideIcon, 
   ScrollText, 
-  Shield, 
-  TestTube2
+  TestTube2,
+  Zap
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -60,11 +60,16 @@ export function Sidebar() {
       <div className="flex items-center justify-between h-16 px-4 border-b border-sidebar-border">
         {!collapsed && (
           <div className="flex items-center">
-            <Shield className="w-6 h-6 text-brand-orange mr-2" />
-            <span className="font-semibold text-white">FraudShield</span>
+            <img 
+              src="/lovable-uploads/88a0210c-b302-4ee4-aaef-6e55c9b66196.png" 
+              alt="SabPaisa" 
+              className="h-6 mr-2" 
+            />
           </div>
         )}
-        {collapsed && <Shield className="w-6 h-6 text-brand-orange mx-auto" />}
+        {collapsed && (
+          <Zap className="w-6 h-6 text-brand-orange mx-auto" />
+        )}
         <Button
           variant="ghost"
           size="icon"
@@ -103,16 +108,16 @@ export function Sidebar() {
         {!collapsed ? (
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 rounded-full bg-brand-blue flex items-center justify-center">
-              <span className="font-semibold text-sm text-white">AS</span>
+              <span className="font-semibold text-sm text-white">SP</span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium truncate">Analyst Session</p>
+              <p className="text-sm font-medium truncate">SabPaisa User</p>
               <p className="text-xs text-sidebar-foreground/70 truncate">Active</p>
             </div>
           </div>
         ) : (
           <div className="w-8 h-8 rounded-full bg-brand-blue flex items-center justify-center mx-auto">
-            <span className="font-semibold text-sm text-white">AS</span>
+            <span className="font-semibold text-sm text-white">SP</span>
           </div>
         )}
       </div>

@@ -16,10 +16,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222 68% 47%;
+    --primary: 217 100% 50%;  /* SabPaisa blue */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 32 92% 54%;
+    --secondary: 36 100% 50%; /* SabPaisa orange */
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
@@ -38,10 +38,14 @@
     --radius: 0.5rem;
 
     /* SabPaisa Colors */
-    --brand-blue: 221 63% 47%;
-    --brand-blue-light: 221 63% 57%;
-    --brand-orange: 32 92% 54%;
-    --brand-orange-light: 32 92% 65%;
+    --sidebar-background: 217 100% 50%; /* SabPaisa blue for sidebar */
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 100% / 0.1;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 100% / 0.2;
+    --sidebar-ring: 0 0% 100% / 0.1;
+    --sidebar-primary: 36 100% 50%; /* SabPaisa orange */
+    --sidebar-primary-foreground: 0 0% 0%;
   }
 
   .dark {
@@ -54,10 +58,10 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 221 63% 47%;
+    --primary: 217 100% 50%;  /* SabPaisa blue */
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 32 92% 54%;
+    --secondary: 36 100% 50%; /* SabPaisa orange */
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
@@ -89,27 +93,27 @@
 
 /* Brand color utility classes */
 .bg-brand-blue {
-  background-color: #2B4FC2;
+  background-color: #0075FF; /* SabPaisa logo blue */
 }
 
 .hover\:bg-brand-blue-light:hover {
-  background-color: #4E6ED7;
+  background-color: #2089FF; /* Lighter SabPaisa blue for hover */
 }
 
 .text-brand-blue {
-  color: #2B4FC2;
+  color: #0075FF; /* SabPaisa logo blue */
 }
 
 .bg-brand-orange {
-  background-color: #F7941D;
+  background-color: #FF9900; /* SabPaisa logo orange */
 }
 
 .hover\:bg-brand-orange-light:hover {
-  background-color: #F9AB52;
+  background-color: #FFAD33; /* Lighter SabPaisa orange for hover */
 }
 
 .text-brand-orange {
-  color: #F7941D;
+  color: #FF9900; /* SabPaisa logo orange */
 }
 
 .bg-brand-background {
@@ -142,11 +146,11 @@
 
 /* Progress indicator styles */
 .Progress-indicator.bg-brand-blue {
-  background-color: #2B4FC2;
+  background-color: #0075FF; /* SabPaisa logo blue */
 }
 
 .Progress-indicator.bg-brand-orange {
-  background-color: #F7941D;
+  background-color: #FF9900; /* SabPaisa logo orange */
 }
 
 /* Table styling */
