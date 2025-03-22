@@ -19,14 +19,7 @@ interface RuleFormProps {
   initialRule: Rule | null;
 }
 
-const defaultParameter: Omit<RuleParameter, "id"> = {
-  name: "",
-  type: "amount",
-  value: "",
-  condition: "greater_than",
-};
-
-export default function RuleForm({ onClose, initialRule }: RuleFormProps) {
+export function RuleForm({ onClose, initialRule }: RuleFormProps) {
   const { addRule, updateRule } = useRules();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -59,7 +52,7 @@ export default function RuleForm({ onClose, initialRule }: RuleFormProps) {
   const handleParameterChange = (
     index: number,
     field: keyof Omit<RuleParameter, "id">,
-    value: string | number | readonly string[]
+    value: string | number
   ) => {
     const newParameters = [...parameters];
     newParameters[index] = {
@@ -276,3 +269,12 @@ export default function RuleForm({ onClose, initialRule }: RuleFormProps) {
     </form>
   );
 }
+
+const defaultParameter: Omit<RuleParameter, "id"> = {
+  name: "",
+  type: "amount",
+  value: "",
+  condition: "greater_than",
+};
+
+export default RuleForm;

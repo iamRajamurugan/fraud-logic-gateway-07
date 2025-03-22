@@ -5,7 +5,7 @@ import { Rule, useRules } from "@/context/RulesContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { RuleCard } from "@/components/rules/RuleCard";
-import { RuleForm } from "@/components/rules/RuleForm";
+import RuleForm from "@/components/rules/RuleForm";
 import {
   Select,
   SelectContent,
