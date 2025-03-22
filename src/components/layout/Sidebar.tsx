@@ -60,15 +60,11 @@ export function Sidebar() {
       <div className="flex items-center justify-between h-16 px-4 border-b border-sidebar-border">
         {!collapsed && (
           <div className="flex items-center">
-            <img 
-              src="/lovable-uploads/88a0210c-b302-4ee4-aaef-6e55c9b66196.png" 
-              alt="SabPaisa" 
-              className="h-6 mr-2" 
-            />
+            <span className="text-xl font-semibold tracking-tight">SabPaisa</span>
           </div>
         )}
         {collapsed && (
-          <Zap className="w-6 h-6 text-brand-orange mx-auto" />
+          <span className="text-lg font-bold mx-auto">SP</span>
         )}
         <Button
           variant="ghost"
