@@ -1,11 +1,13 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 210 33% 98%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -14,10 +16,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 222 68% 47%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
+    --secondary: 32 92% 54%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
@@ -29,17 +31,17 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 13% 82%;
+    --input: 220 13% 82%;
+    --ring: 222 68% 47%;
 
     --radius: 0.5rem;
 
     /* SabPaisa Colors */
-    --brand-blue: 218 72% 37.5%;
-    --brand-blue-light: 217 73% 45%;
-    --brand-orange: 30 91% 56%;
-    --brand-orange-light: 30 91% 65%;
+    --brand-blue: 221 63% 47%;
+    --brand-blue-light: 221 63% 57%;
+    --brand-orange: 32 92% 54%;
+    --brand-orange-light: 32 92% 65%;
   }
 
   .dark {
@@ -52,10 +54,10 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
+    --primary: 221 63% 47%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 217.2 32.6% 17.5%;
+    --secondary: 32 92% 54%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
@@ -78,34 +80,51 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-brand-background text-brand-text font-sans;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-medium tracking-tight;
   }
 }
 
+/* Brand color utility classes */
 .bg-brand-blue {
-  background-color: hsl(218, 72%, 37.5%);
+  background-color: #2B4FC2;
 }
 
 .hover\:bg-brand-blue-light:hover {
-  background-color: hsl(217, 73%, 45%);
+  background-color: #4E6ED7;
 }
 
 .text-brand-blue {
-  color: hsl(218, 72%, 37.5%);
+  color: #2B4FC2;
 }
 
 .bg-brand-orange {
-  background-color: hsl(30, 91%, 56%);
+  background-color: #F7941D;
 }
 
 .hover\:bg-brand-orange-light:hover {
-  background-color: hsl(30, 91%, 65%);
+  background-color: #F9AB52;
 }
 
 .text-brand-orange {
-  color: hsl(30, 91%, 56%);
+  color: #F7941D;
 }
 
+.bg-brand-background {
+  background-color: #F5F7FA;
+}
+
+.text-brand-text {
+  color: #333333;
+}
+
+.border-brand-border {
+  border-color: #D1D5DB;
+}
+
+/* Animation classes */
 .animate-fade-in {
   animation: fadeIn 0.5s ease-in-out;
 }
@@ -121,10 +140,38 @@
   }
 }
 
+/* Progress indicator styles */
 .Progress-indicator.bg-brand-blue {
-  background-color: hsl(218, 72%, 37.5%);
+  background-color: #2B4FC2;
 }
 
 .Progress-indicator.bg-brand-orange {
-  background-color: hsl(30, 91%, 56%);
+  background-color: #F7941D;
+}
+
+/* Table styling */
+.table-striped tbody tr:nth-child(even) {
+  @apply bg-gray-50;
+}
+
+.table-hover tbody tr:hover {
+  @apply bg-gray-100 transition-colors;
+}
+
+/* Card styling */
+.card-hover {
+  @apply transition-all duration-200 hover:shadow-md;
+}
+
+/* Custom button styling */
+.btn-brand-primary {
+  @apply bg-brand-blue text-white hover:bg-brand-blue-light transition-colors;
+}
+
+.btn-brand-secondary {
+  @apply bg-brand-orange text-white hover:bg-brand-orange-light transition-colors;
+}
+
+.btn-outline {
+  @apply border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 transition-colors;
 }

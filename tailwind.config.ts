@@ -19,6 +19,9 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -64,10 +67,13 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				brand: {
-					blue: '#1A49A5',
-					orange: '#F38C26',
-					'blue-light': '#3A69C5',
-					'orange-light': '#F5A54F'
+					blue: '#2B4FC2',
+					orange: '#F7941D',
+					'blue-light': '#4E6ED7',
+					'orange-light': '#F9AB52',
+					'background': '#F5F7FA',
+					'text': '#333333',
+					'border': '#D1D5DB'
 				}
 			},
 			borderRadius: {

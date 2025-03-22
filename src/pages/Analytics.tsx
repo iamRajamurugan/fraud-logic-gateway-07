@@ -18,14 +18,14 @@ const trendData = [
   { name: "Jul", flagged: 40, legitimate: 430 }
 ];
 
-// Sample data for the comparison chart
-const comparisonData = [
-  { name: "Credit Card", fraudulent: 400, legitimate: 2400 },
-  { name: "Debit Card", fraudulent: 300, legitimate: 1398 },
-  { name: "ACH", fraudulent: 200, legitimate: 9800 },
-  { name: "Wire", fraudulent: 278, legitimate: 3908 },
-  { name: "Crypto", fraudulent: 189, legitimate: 4800 }
-];
+// Sample data for the model performance metrics
+const modelPerformance = {
+  accuracy: 0.92,
+  precision: 0.89,
+  recall: 0.86,
+  f1Score: 0.87,
+  auc: 0.94
+};
 
 // Sample data for transactions
 const transactions = [
@@ -76,44 +76,35 @@ const transactions = [
   }
 ];
 
-// Sample model performance metrics
-const modelPerformance = {
-  accuracy: 0.92,
-  precision: 0.89,
-  recall: 0.86,
-  f1Score: 0.87,
-  auc: 0.94
-};
-
 export default function Analytics() {
   const [activeTab, setActiveTab] = useState("overview");
 
   return (
-    <div className="container mx-auto py-6 space-y-8">
+    <div className="space-y-8 animate-fade-in">
       <div className="flex flex-col space-y-4">
-        <h1 className="text-3xl font-bold tracking-tight">Risk Analytics</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-brand-text">Risk Analytics</h1>
         <p className="text-muted-foreground">
           Monitor fraud detection performance and analyze transaction patterns.
         </p>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid grid-cols-4 w-full max-w-md">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="trends">Trends</TabsTrigger>
-          <TabsTrigger value="transactions">Transactions</TabsTrigger>
-          <TabsTrigger value="models">Models</TabsTrigger>
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+        <TabsList className="grid grid-cols-4 w-full max-w-md bg-muted">
+          <TabsTrigger value="overview" className="data-[state=active]:bg-white">Overview</TabsTrigger>
+          <TabsTrigger value="trends" className="data-[state=active]:bg-white">Trends</TabsTrigger>
+          <TabsTrigger value="transactions" className="data-[state=active]:bg-white">Transactions</TabsTrigger>
+          <TabsTrigger value="models" className="data-[state=active]:bg-white">Models</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6 pt-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <FraudTrendsChart data={trendData} />
-            <FraudComparisonChart data={comparisonData} />
+            <FraudComparisonChart type="channel" />
           </div>
 
-          <Card>
+          <Card className="shadow-sm border-brand-border">
             <CardHeader>
-              <CardTitle>Recent Flagged Transactions</CardTitle>
+              <CardTitle className="text-lg font-medium text-brand-text">Recent Flagged Transactions</CardTitle>
             </CardHeader>
             <CardContent>
               <TransactionTable transactions={transactions.filter(t => t.status === "flagged")} />
@@ -124,14 +115,14 @@ export default function Analytics() {
         <TabsContent value="trends" className="space-y-6 pt-4">
           <div className="grid gap-6">
             <FraudTrendsChart data={trendData} />
-            <FraudComparisonChart data={comparisonData} />
+            <FraudComparisonChart type="channel" />
           </div>
         </TabsContent>
 
         <TabsContent value="transactions" className="pt-4">
-          <Card>
+          <Card className="shadow-sm border-brand-border">
             <CardHeader>
-              <CardTitle>All Transactions</CardTitle>
+              <CardTitle className="text-lg font-medium text-brand-text">All Transactions</CardTitle>
             </CardHeader>
             <CardContent>
               <TransactionTable transactions={transactions} />

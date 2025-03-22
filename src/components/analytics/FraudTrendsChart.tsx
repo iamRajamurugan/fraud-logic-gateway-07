@@ -34,29 +34,51 @@ export function FraudTrendsChart({ data }: FraudTrendsChartProps) {
   });
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Fraud Trends</CardTitle>
+    <Card className="shadow-sm border-brand-border">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-lg font-medium text-brand-text">Fraud Trends</CardTitle>
       </CardHeader>
       <CardContent className="pl-2">
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
+            <CartesianGrid strokeDasharray="3 3" stroke="#D1D5DB" />
+            <XAxis 
+              dataKey="name" 
+              tick={{ fontSize: 12, fill: '#333333' }}
+              tickLine={{ stroke: '#D1D5DB' }}
+              axisLine={{ stroke: '#D1D5DB' }}
+            />
+            <YAxis 
+              tick={{ fontSize: 12, fill: '#333333' }}
+              tickLine={{ stroke: '#D1D5DB' }}
+              axisLine={{ stroke: '#D1D5DB' }}
+            />
+            <Tooltip 
+              contentStyle={{ 
+                backgroundColor: '#FFFFFF', 
+                borderColor: '#D1D5DB',
+                borderRadius: '6px',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' 
+              }} 
+            />
             <Legend />
             <Line
               type="monotone"
               dataKey="flagged"
-              stroke="#8884d8"
+              stroke="#F7941D"
               name="Flagged Transactions"
+              strokeWidth={2}
+              dot={{ stroke: '#F7941D', strokeWidth: 2, r: 4 }}
+              activeDot={{ stroke: '#F7941D', strokeWidth: 2, r: 6 }}
             />
             <Line
               type="monotone"
               dataKey="legitimate"
-              stroke="#82ca9d"
+              stroke="#2B4FC2"
               name="Legitimate Transactions"
+              strokeWidth={2}
+              dot={{ stroke: '#2B4FC2', strokeWidth: 2, r: 4 }}
+              activeDot={{ stroke: '#2B4FC2', strokeWidth: 2, r: 6 }}
             />
           </LineChart>
         </ResponsiveContainer>
@@ -65,13 +87,13 @@ export function FraudTrendsChart({ data }: FraudTrendsChartProps) {
             <PopoverTrigger asChild>
               <Button
                 id="date"
-                variant={"outline"}
+                variant="outline"
                 className={cn(
-                  "w-[280px] justify-start text-left font-normal",
+                  "w-[280px] justify-start text-left font-normal border-brand-border",
                   !date && "text-muted-foreground"
                 )}
               >
-                <CalendarIcon className="mr-2 h-4 w-4" />
+                <CalendarIcon className="mr-2 h-4 w-4 text-brand-blue" />
                 {date?.from ? (
                   date.to ? (
                     `${format(date.from, "MMM dd, yyyy")} - ${format(

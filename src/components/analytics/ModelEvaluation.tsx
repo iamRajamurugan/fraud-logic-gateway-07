@@ -20,7 +20,16 @@ import {
   Legend,
   Tooltip,
 } from "recharts";
-import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
+
+interface ModelEvaluationProps {
+  data: {
+    accuracy: number;
+    precision: number;
+    recall: number;
+    f1Score: number;
+    auc: number;
+  };
+}
 
 // Mock data for confusion matrix
 const confusionMatrixData = {
@@ -44,7 +53,7 @@ const confusionMatrixData = {
   },
 };
 
-export function ModelEvaluation() {
+export function ModelEvaluation({ data }: ModelEvaluationProps) {
   const [dateRange, setDateRange] = useState<"7d" | "30d" | "90d">("30d");
   
   const confusionMatrix = confusionMatrixData[dateRange];
@@ -71,13 +80,13 @@ export function ModelEvaluation() {
     {
       name: "True Positives",
       value: confusionMatrix.truePositives,
-      color: "#1A49A5", // SabPaisa blue
+      color: "#2B4FC2", // SabPaisa blue
       description: "Correctly identified fraud transactions",
     },
     {
       name: "False Positives",
       value: confusionMatrix.falsePositives,
-      color: "#F38C26", // SabPaisa orange
+      color: "#F7941D", // SabPaisa orange
       description: "Non-fraud transactions incorrectly flagged as fraud",
     },
     {
@@ -99,8 +108,8 @@ export function ModelEvaluation() {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
-        <div className="bg-white p-3 rounded-lg border shadow-md">
-          <p className="font-medium">{data.name}: {data.value}</p>
+        <div className="bg-white p-3 rounded-lg border border-brand-border shadow-md">
+          <p className="font-medium text-brand-text">{data.name}: {data.value}</p>
           <p className="text-xs text-muted-foreground">{data.description}</p>
           <p className="text-xs font-medium mt-1">
             {((data.value / total) * 100).toFixed(2)}% of total
@@ -113,11 +122,11 @@ export function ModelEvaluation() {
   
   return (
     <div className="grid gap-6 lg:grid-cols-3">
-      <Card className="lg:col-span-1 shadow-md">
+      <Card className="lg:col-span-1 shadow-sm border-brand-border">
         <CardHeader>
           <div className="flex justify-between items-center">
             <div>
-              <CardTitle>Model Metrics</CardTitle>
+              <CardTitle className="text-lg font-medium text-brand-text">Model Metrics</CardTitle>
               <CardDescription>
                 Fraud detection model performance
               </CardDescription>
@@ -131,18 +140,18 @@ export function ModelEvaluation() {
             onValueChange={(value) => setDateRange(value as "7d" | "30d" | "90d")} 
             className="w-full"
           >
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="7d">Last 7 days</TabsTrigger>
-              <TabsTrigger value="30d">Last 30 days</TabsTrigger>
-              <TabsTrigger value="90d">Last 90 days</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3 bg-muted">
+              <TabsTrigger value="7d" className="data-[state=active]:bg-white">Last 7 days</TabsTrigger>
+              <TabsTrigger value="30d" className="data-[state=active]:bg-white">Last 30 days</TabsTrigger>
+              <TabsTrigger value="90d" className="data-[state=active]:bg-white">Last 90 days</TabsTrigger>
             </TabsList>
           </Tabs>
           
           <div className="space-y-6">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <div className="text-sm font-medium">Precision</div>
-                <div className="font-bold">{(precision * 100).toFixed(1)}%</div>
+                <div className="text-sm font-medium text-brand-text">Precision</div>
+                <div className="font-bold text-brand-text">{(precision * 100).toFixed(1)}%</div>
               </div>
               <Progress 
                 value={precision * 100} 
@@ -156,8 +165,8 @@ export function ModelEvaluation() {
             
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <div className="text-sm font-medium">Recall</div>
-                <div className="font-bold">{(recall * 100).toFixed(1)}%</div>
+                <div className="text-sm font-medium text-brand-text">Recall</div>
+                <div className="font-bold text-brand-text">{(recall * 100).toFixed(1)}%</div>
               </div>
               <Progress 
                 value={recall * 100} 
@@ -171,8 +180,8 @@ export function ModelEvaluation() {
             
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <div className="text-sm font-medium">F1 Score</div>
-                <div className="font-bold">{(f1Score * 100).toFixed(1)}%</div>
+                <div className="text-sm font-medium text-brand-text">F1 Score</div>
+                <div className="font-bold text-brand-text">{(f1Score * 100).toFixed(1)}%</div>
               </div>
               <Progress 
                 value={f1Score * 100} 
@@ -186,8 +195,8 @@ export function ModelEvaluation() {
             
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <div className="text-sm font-medium">Accuracy</div>
-                <div className="font-bold">{(accuracy * 100).toFixed(1)}%</div>
+                <div className="text-sm font-medium text-brand-text">Accuracy</div>
+                <div className="font-bold text-brand-text">{(accuracy * 100).toFixed(1)}%</div>
               </div>
               <Progress 
                 value={accuracy * 100} 
@@ -201,28 +210,28 @@ export function ModelEvaluation() {
           </div>
         </CardContent>
         
-        <CardFooter className="flex justify-between border-t pt-4 text-sm text-muted-foreground">
+        <CardFooter className="flex justify-between border-t border-brand-border pt-4 text-sm text-muted-foreground">
           <div className="flex items-center">
             <Calendar className="mr-1 h-4 w-4" />
             <span>Updated: Oct 15, 2023</span>
           </div>
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" className="border-brand-border">
             <RefreshCw className="mr-2 h-3 w-3" />
             Refresh
           </Button>
         </CardFooter>
       </Card>
       
-      <Card className="lg:col-span-2 shadow-md">
+      <Card className="lg:col-span-2 shadow-sm border-brand-border">
         <CardHeader>
           <div className="flex justify-between items-center">
             <div>
-              <CardTitle>Confusion Matrix</CardTitle>
+              <CardTitle className="text-lg font-medium text-brand-text">Confusion Matrix</CardTitle>
               <CardDescription>
                 Visualization of prediction outcomes vs actual values
               </CardDescription>
             </div>
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="border-brand-border">
               <Download className="mr-2 h-4 w-4" />
               Export
             </Button>
@@ -233,20 +242,20 @@ export function ModelEvaluation() {
             <div className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <div className="rounded-md bg-blue-50 border border-blue-200 p-4 flex flex-col items-center justify-center text-center">
-                  <div className="text-3xl font-bold text-blue-600 mb-2">
+                  <div className="text-3xl font-bold text-brand-blue mb-2">
                     {confusionMatrix.truePositives}
                   </div>
-                  <div className="text-sm font-medium mb-1">True Positives</div>
+                  <div className="text-sm font-medium mb-1 text-brand-text">True Positives</div>
                   <div className="text-xs text-muted-foreground">
                     Correctly identified fraud transactions
                   </div>
                 </div>
                 
                 <div className="rounded-md bg-orange-50 border border-orange-200 p-4 flex flex-col items-center justify-center text-center">
-                  <div className="text-3xl font-bold text-orange-600 mb-2">
+                  <div className="text-3xl font-bold text-brand-orange mb-2">
                     {confusionMatrix.falsePositives}
                   </div>
-                  <div className="text-sm font-medium mb-1">False Positives</div>
+                  <div className="text-sm font-medium mb-1 text-brand-text">False Positives</div>
                   <div className="text-xs text-muted-foreground">
                     Non-fraud transactions incorrectly flagged as fraud
                   </div>
@@ -256,7 +265,7 @@ export function ModelEvaluation() {
                   <div className="text-3xl font-bold text-red-600 mb-2">
                     {confusionMatrix.falseNegatives}
                   </div>
-                  <div className="text-sm font-medium mb-1">False Negatives</div>
+                  <div className="text-sm font-medium mb-1 text-brand-text">False Negatives</div>
                   <div className="text-xs text-muted-foreground">
                     Fraud transactions missed by the system
                   </div>
@@ -266,18 +275,18 @@ export function ModelEvaluation() {
                   <div className="text-3xl font-bold text-emerald-600 mb-2">
                     {confusionMatrix.trueNegatives}
                   </div>
-                  <div className="text-sm font-medium mb-1">True Negatives</div>
+                  <div className="text-sm font-medium mb-1 text-brand-text">True Negatives</div>
                   <div className="text-xs text-muted-foreground">
                     Correctly identified non-fraud transactions
                   </div>
                 </div>
               </div>
               
-              <div className="flex justify-between border-t pt-4">
-                <div className="text-sm">
+              <div className="flex justify-between border-t border-brand-border pt-4">
+                <div className="text-sm text-brand-text">
                   <span className="font-medium">Total Transactions:</span> {total}
                 </div>
-                <div className="text-sm">
+                <div className="text-sm text-brand-text">
                   <span className="font-medium">Fraud Rate:</span> {((confusionMatrix.truePositives + confusionMatrix.falseNegatives) / total * 100).toFixed(2)}%
                 </div>
               </div>
