@@ -1,3 +1,5 @@
+
+// Import React directly at the top to ensure it's available
 import * as React from "react"
 
 import type {
